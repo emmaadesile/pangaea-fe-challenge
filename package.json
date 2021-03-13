@@ -22,7 +22,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build:css": "tailwind build src/styles/tailwind.css -o src/styles/tailwindBuild.css",
+    "watch:css": "chokidar 'src/**/*.css' --ignore src/tailwindBuild.css -c 'yarn run build:css'",
+    "build:prod": "NODE_ENV=production yarn build:css && yarn build"
   },
   "eslintConfig": {
     "extends": [
@@ -43,6 +46,12 @@
     ]
   },
   "devDependencies": {
-    "prettier": "^2.2.1"
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9",
+    "chokidar-cli": "^2.1.0",
+    "postcss": "^7",
+    "postcss-cli": "^8.3.1",
+    "prettier": "^2.2.1",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

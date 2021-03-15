@@ -1,18 +1,19 @@
-import gql from 'graphql-tag';
+import { gql } from '@apollo/client';
 
 export const PRODUCTS = gql`
-  query products {
+  query GetProducts {
     products {
       id
       title
       image_url
-      price(currency: Currency!)
+      # price(currency: $currency)
+      price(currency: USD)
       product_options {
         title
         prefix
         suffix
         options {
-          id 
+          id
           value
         }
       }
@@ -21,7 +22,7 @@ export const PRODUCTS = gql`
 `;
 
 export const CURRENCY = gql`
-  query Currency {
+  query GetCurrency {
     currency
   }
 `;

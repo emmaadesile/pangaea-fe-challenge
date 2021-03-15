@@ -7,8 +7,9 @@ import './styles/tailwindBuild.css';
 function App() {
   return (
     <ApolloProvider client={client}>
-      <div className="text-4xl">Hello Apollo</div>
-      <Products />
+      <div>
+        <Products />
+      </div>
     </ApolloProvider>
   );
 }

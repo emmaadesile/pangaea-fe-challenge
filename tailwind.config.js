@@ -6,8 +6,35 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'pangaea-green': '#acaca4',
-        'pangaea-green-dark': '#6c7c6c',
+        'pangaea-green-light': 'rgb(226,230,227)',
+        'pangaea-green-dark': '#4b5648',
+        'cart-bg': '#f2f3f0',
+      },
+      gridTemplateColumns: {
+        '3cols': 'repeat(auto-fit, minmax(250px, 1fr))',
+      },
+      keyframes: {
+        slideInMenu: {
+          '0%': {
+            transform: 'translate3d(100%, 0, 0)',
+          },
+          '100%': {
+            transform: 'translate3d(0%, 0, 0)',
+          },
+        },
+        moveIcon: {
+          '0%': {
+            transform: 'translateY(-5px)',
+            opacity: 0,
+          },
+          '100%': {
+            transform: 'translateY(0)',
+            opacity: 1,
+          },
+        },
+      },
+      animation: {
+        slideInMenu: 'slideInMenu 0.6s cubic-bezier(1, 0, 0, 1) forwards',
       },
     },
   },

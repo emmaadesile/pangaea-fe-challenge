@@ -11,7 +11,7 @@ module.exports = {
         'cart-bg': '#f2f3f0',
       },
       gridTemplateColumns: {
-        '3cols': 'repeat(auto-fit, minmax(250px, 1fr))',
+        '3cols': 'repeat(auto-fit, minmax(220px, 1fr))',
       },
       keyframes: {
         slideInMenu: {

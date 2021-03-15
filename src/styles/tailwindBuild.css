@@ -28216,7 +28216,7 @@ html {
 }
 
 .grid-cols-3cols {
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .auto-cols-auto {
@@ -59330,7 +59330,7 @@ html {
   }
 
   .sm\:grid-cols-3cols {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .sm\:auto-cols-auto {
@@ -90392,7 +90392,7 @@ html {
   }
 
   .md\:grid-cols-3cols {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .md\:auto-cols-auto {
@@ -121454,7 +121454,7 @@ html {
   }
 
   .lg\:grid-cols-3cols {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .lg\:auto-cols-auto {
@@ -152516,7 +152516,7 @@ html {
   }
 
   .xl\:grid-cols-3cols {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .xl\:auto-cols-auto {
@@ -183578,7 +183578,7 @@ html {
   }
 
   .\32xl\:grid-cols-3cols {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 
   .\32xl\:auto-cols-auto {

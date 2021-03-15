@@ -52,6 +52,7 @@
     "postcss": "^7",
     "postcss-cli": "^8.3.1",
     "prettier": "^2.2.1",
+    "styled-components": "^5.2.1",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   }
 }

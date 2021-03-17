@@ -90,6 +90,7 @@ const Products = () => {
     refetch: refetchProducts,
   } = useQuery(PRODUCTS, {
     variables: { currency },
+    fetchPolicy: 'network-only',
   });
   const [showCart, setShowCart] = React.useState(false);
   const [cartState, dispatch] = React.useReducer(reducer, initialState);
@@ -111,8 +112,7 @@ const Products = () => {
     /*
       update cart prices when currency changes 
     */
-    if (currencyChanged && data?.products) {
-      console.log('NO ERRORS', {showError, loading})
+    if (currencyChanged && !loading && data?.products) {
       const updatedCart = cartState.map((item) => {
         return data?.products.filter((product) => {
           if (product.id === item.id) {
@@ -129,7 +129,7 @@ const Products = () => {
 
       dispatch({ type: actionTypes.UPDATE_PRICE, payload: updatedCart });
     }
-  }, [loading, cartState, currencyChanged, data?.products, showError]);
+  }, [loading, cartState, currencyChanged, data?.products]);
 
   const handleAddToCart = (newItem) => {
     dispatch({ type: actionTypes.ADD_PRODUCT, payload: newItem });
@@ -144,7 +144,7 @@ const Products = () => {
 
   const handleChangeCurrency = async (currency) => {
     setCurrency(currency);
-    refetchProducts();
+    await refetchProducts();
 
     setCurrencyChanged(true);
   };

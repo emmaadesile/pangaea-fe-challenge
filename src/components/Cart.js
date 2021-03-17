@@ -26,7 +26,7 @@ const Cart = ({
   } = cartContext;
 
   const cartTotalPrice = React.useMemo(() => {
-    return cartState.reduce((total, item) => {
+    return cartState?.reduce((total, item) => {
       if (item.price) {
         return total + item.price;
       }

@@ -14151,6 +14151,10 @@ html {
   max-height: 24rem;
 }
 
+.max-h-100 {
+  max-height: 35rem;
+}
+
 .max-h-px {
   max-height: 1px;
 }
@@ -45278,6 +45282,10 @@ html {
     max-height: 24rem;
   }
 
+  .sm\:max-h-100 {
+    max-height: 35rem;
+  }
+
   .sm\:max-h-px {
     max-height: 1px;
   }
@@ -76338,6 +76346,10 @@ html {
 
   .md\:max-h-96 {
     max-height: 24rem;
+  }
+
+  .md\:max-h-100 {
+    max-height: 35rem;
   }
 
   .md\:max-h-px {
@@ -107402,6 +107414,10 @@ html {
     max-height: 24rem;
   }
 
+  .lg\:max-h-100 {
+    max-height: 35rem;
+  }
+
   .lg\:max-h-px {
     max-height: 1px;
   }
@@ -138464,6 +138480,10 @@ html {
     max-height: 24rem;
   }
 
+  .xl\:max-h-100 {
+    max-height: 35rem;
+  }
+
   .xl\:max-h-px {
     max-height: 1px;
   }
@@ -169524,6 +169544,10 @@ html {
 
   .\32xl\:max-h-96 {
     max-height: 24rem;
+  }
+
+  .\32xl\:max-h-100 {
+    max-height: 35rem;
   }
 
   .\32xl\:max-h-px {

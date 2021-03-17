@@ -18,8 +18,8 @@ const ProductCard = ({ item, currency, handleAddToCart }) => {
 
       <div className="grid place-items-center">
         <div className="text-center mb-5">
-          <h3>{item.title}</h3>
-          <p>From: {price}</p>
+          <h3 className="text-pangaea-green-dark">{item.title}</h3>
+          <p className="text-gray-800">From: {price}</p>
         </div>
 
         <button

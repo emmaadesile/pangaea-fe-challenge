@@ -13,6 +13,9 @@ module.exports = {
       gridTemplateColumns: {
         '3cols': 'repeat(auto-fit, minmax(220px, 1fr))',
       },
+      maxHeight: {
+        '100': '35rem'
+      },
       keyframes: {
         slideInMenu: {
           '0%': {

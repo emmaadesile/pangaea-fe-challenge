@@ -48,14 +48,14 @@ const HollowLoader = styled.div`
   }
 `;
 const Container = styled.div`
-  background-color: rgb(226, 230, 227);
+  /* background-color: rgb(226, 230, 227); */
   text-align: center;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 60vh;
-  width: 100vh;
-  margin: 0;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 const Loading = () => {

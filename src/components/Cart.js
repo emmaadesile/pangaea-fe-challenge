@@ -1,21 +1,36 @@
 import * as React from 'react';
-import { useQuery } from '@apollo/react-hooks';
 
-import { CURRENCY } from '../graphql/queries';
 import CartContext from '../CartContext';
 import BackButton from '../icons/BackButton';
 import Close from '../icons/Close';
 
 import { actionTypes } from '../pages/Products';
+import Loading from '../components/Loading';
+import ErrorComp from '../components/Error';
+import formatCurrency from '../utils/formatCurrency';
 
-const Cart = ({ cartState, setShowCart, showCart }) => {
+const Cart = ({
+  setShowCart,
+  showCart,
+  currency,
+  cartLoading,
+  loadingCurrencies,
+  currencyData,
+}) => {
   const cartContext = React.useContext(CartContext);
-  const { data } = useQuery(CURRENCY);
-  const cartTotlPrice = React.useMemo(() => {
+  const {
+    cartState,
+    cartDispatch,
+    handleChangeCurrency,
+    showError,
+  } = cartContext;
+
+  const cartTotalPrice = React.useMemo(() => {
     return cartState.reduce((total, item) => {
       if (item.price) {
         return total + item.price;
       }
+      return null;
     }, 0);
   }, [cartState]);
 
@@ -26,7 +41,7 @@ const Cart = ({ cartState, setShowCart, showCart }) => {
       ${showCart ? ' opacity-100 animate-slideInMenu' : 'invisible opacity-0'}
       `}
       >
-        <div className="relative min-h-full ">
+        <div className="relative min-h-full">
           <div className="grid place-items-center w-full relative">
             <div
               className="w-6 h-6 rounded-xl border-gray-300 border p-1 absolute left-0 cursor-pointer"
@@ -37,87 +52,111 @@ const Cart = ({ cartState, setShowCart, showCart }) => {
             <p className="uppercase text-sm text-gray-500">Your Cart</p>
           </div>
 
-          <div className="mt-4">
-            <select
-              className="w-18 h-8 px-2 py-1"
-              onChange={(e) => cartContext.setCurrency(e.target.value)}
-            >
-              {data?.currency?.map((curr, index) => (
-                <option key={index}>{curr}</option>
-              ))}
-            </select>
+          <div className="mt-4 flex gap-2 items-stretch">
+            {loadingCurrencies ? (
+              <div className="w-18 h-8 px-2 py-1">
+                <p>loading...</p>
+              </div>
+            ) : (
+              <>
+                <select
+                  className="w-18 h-8 px-2 py-1"
+                  onChange={(e) => handleChangeCurrency(e.target.value)}
+                >
+                  {currencyData.currency.map((curr, index) => (
+                    <option key={index}>{curr}</option>
+                  ))}
+                </select>
+
+                {showError && <ErrorComp />}
+              </>
+            )}
           </div>
 
-          {!cartState.length ? (
-            <div className="w-full h-10 grid place-items-center mt-10">
-              <p className=" text-gray-500">Your cart is empty.</p>
-            </div>
-          ) : (
-            cartState.map((item, index) => (
-              <div className="bg-white pl-5 pr-3 py-3 mt-6" key={index}>
-                <div className="bg flex items-center justify-between">
-                  <p className="text-gray-600 text-sm">{item.title}</p>
-                  <div
-                    className="w-3 h-3 cursor-pointer"
-                    onClick={() =>
-                      cartContext.cartDispatch({
-                        type: actionTypes.REMOVE_PRODUCT,
-                        payload: item,
-                      })
-                    }
-                  >
-                    <Close />
-                  </div>
-                </div>
-
-                <div className="flex justify-end mt-4 mr-0 md:mr-10">
-                  <img
-                    alt="cart-item"
-                    src={item.image_url}
-                    className="w-16 h-16"
-                  />
-                </div>
-
-                <div className="grid grid-cols-3 w-full mt-2">
-                  <div className="border border-gray-400 flex items-center h-8 w-20">
-                    <button
-                      className="w-6"
-                      onClick={() =>
-                        cartContext.cartDispatch({
-                          type: actionTypes.DECREASE_PRODUCT,
-                          payload: item,
-                        })
-                      }
-                    >
-                      -
-                    </button>
-                    <p className="w-6 text-center">{item.quantity}</p>
-                    <button
-                      className="w-6"
-                      onClick={() =>
-                        cartContext.cartDispatch({
-                          type: actionTypes.ADD_PRODUCT,
-                          payload: item,
-                        })
-                      }
-                    >
-                      +
-                    </button>
-                  </div>
-
-                  <div className="grid items-center justify-items-center">
-                    <p>{item.price}</p>
-                  </div>
-                </div>
+          <div className="overflow-scroll border-gray-600 w-full max-h-100">
+            {cartLoading ? (
+              <Loading />
+            ) : !cartState.length ? (
+              <div className="w-full h-10 grid place-items-center mt-10">
+                <p className=" text-gray-500">Your cart is empty.</p>
               </div>
-            ))
-          )}
+            ) : (
+              cartState.map((item, index) => (
+                <div className="bg-white pl-5 pr-3 py-3 mt-6" key={index}>
+                  <div className="bg flex items-center justify-between">
+                    <p className="text-gray-600 text-sm">{item.title}</p>
+                    <div
+                      className="w-3 h-3 cursor-pointer"
+                      onClick={() =>
+                        cartDispatch({
+                          type: actionTypes.REMOVE_PRODUCT,
+                          payload: item,
+                        })
+                      }
+                    >
+                      <Close />
+                    </div>
+                  </div>
+
+                  <div className="flex justify-end mt-4 mr-0 md:mr-10">
+                    <img
+                      alt="cart-item"
+                      src={item.image_url}
+                      className="w-16 h-16"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-3 w-full mt-2">
+                    <div className="border border-gray-400 flex items-center h-8 w-20">
+                      <button
+                        disabled={showError}
+                        className="w-6"
+                        onClick={() =>
+                          cartDispatch({
+                            type: actionTypes.DECREASE_PRODUCT,
+                            payload: item,
+                          })
+                        }
+                      >
+                        -
+                      </button>
+                      <p className="w-6 text-center">{item.quantity}</p>
+                      <button
+                        disabled={showError}
+                        className="w-6"
+                        onClick={() =>
+                          cartDispatch({
+                            type: actionTypes.ADD_PRODUCT,
+                            payload: item,
+                          })
+                        }
+                      >
+                        +
+                      </button>
+                    </div>
+
+                    <div className="grid items-center justify-items-center">
+                      <p>
+                        {showError
+                          ? `${item.price}.00`
+                          : formatCurrency(item.price, currency)}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
 
           <div className="grid mt-6 gap-4 absolute bottom-3 w-full">
             <div className="border-t border-pangaea-green-dark"></div>
             <div className="flex justify-between">
               <p>Subtotal</p>
-              <p>${`${cartTotlPrice}.00`}</p>
+              <p>
+                {showError
+                  ? `${cartTotalPrice}.00`
+                  : formatCurrency(cartTotalPrice, currency)}
+              </p>
             </div>
 
             <div className="grid w-full h-12 place-items-center bg-white  cursor-pointer">
